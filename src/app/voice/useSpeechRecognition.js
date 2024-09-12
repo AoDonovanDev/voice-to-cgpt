@@ -14,15 +14,15 @@ export default function useSpeechRecognition(dialect, setResult, count) {
     
 
     speechRef.current.onstart = () => {
-      console.log('onStart')
+      console.log('onStart');
     };
 
     speechRef.current.onError = () => {
-      console.log('onError')
+      console.log('onError');
     };
 
     speechRef.current.onend = () => {
-      console.log('onEnd')
+      console.log('onEnd');
     };
     
     let final_transcript = "";

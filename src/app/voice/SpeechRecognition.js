@@ -19,22 +19,21 @@ export default function SpeechRecognition ( { dialect } ) {
       },
       body: JSON.stringify({msg: msg})
     })
-    const result = await response.json()
-    console.log(result)
-    return result
+    const result = await response.json();
+    console.log(result);
+    return result;
   }
   
   function startWrapper () {
-    
-    speechRecognition.start()
+    speechRecognition.start();
     setStatus('start')
    
   }
 
   async function stopWrapper () {
-    speechRecognition.stop()
-    setStatus('end')
-    const {txtResponse, voiceResponse}  = await chatGpt(result)
+    speechRecognition.stop();
+    setStatus('end');
+    const {txtResponse, voiceResponse}  = await chatGpt(result);
     
     const snd = new Audio("data:audio/wav;base64," + voiceResponse);
     snd.play();

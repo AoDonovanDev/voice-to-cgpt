@@ -1,7 +1,8 @@
 'use client'
 
 import { langs } from './language'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
+import { langMap } from './langMap'
 import SpeechRecognition from './SpeechRecognition'
 
 
@@ -9,19 +10,16 @@ import SpeechRecognition from './SpeechRecognition'
 
 export default function Voice () {
   
-  const [dialects, setDialects] = useState([langs[0][1]])
-  const [dialect, setDialect] = useState(dialects[0])
-  const bloop = useRef(0)
-  bloop.current++
-  console.log('page', bloop)
+  const [language, setLanguage] = useState("English")
+  const [dialect, setDialect] = useState(langMap[language][0]);
 
-  function selectDialects(val) {
-    const filt = [...langs].filter(l => l[0] == val)
-    setDialects(filt[0].slice(1))
+
+  function selectLanguage(val) {
+    setLanguage(val);
   }
 
   function selectDialect(val) {
-    setDialect(val)
+    setDialect(val);
   }
 
 
@@ -30,11 +28,11 @@ export default function Voice () {
     <div className="voice">
       <div className="mt-4" id="div_language">
         <h2 className="mb-3">Select Language</h2>
-        <select className="select select-info w-full max-w" id="select_language" onChange={(e)=>selectDialects(e.target.value)}>
-          {langs.map((l, i) => <option key={i}>{l[0]}</option>)}
+        <select className="select select-info w-full max-w" id="select_language" onChange={(e)=>selectLanguage(e.target.value)} defaultValue={"English"}>
+          {Object.keys(langMap).map((l, i) => <option key={i}>{l}</option>)}
         </select>
-        <select className="select select-info w-full max-w" id="select_dialect" onClick={(e)=>selectDialect(e.target.value)}>
-          {dialects.map((d, i) => <option key={i}>{d[1]}</option>)}
+        <select className="select select-info w-full max-w" id="select_dialect" onClick={(e)=>selectDialect(e.target.value)} disabled={langMap[language].length < 2}>
+          {langMap[language].map((d, i) => <option key={i} value={d[0]}>{d[1]}</option>)}
         </select>
     </div>
     <SpeechRecognition dialect={dialect}/>
